@@ -6,6 +6,9 @@ import sys
 
 # Redraws
 def redraw_menu():
+    win.fill((77, 43, 50))
+    menu.draw(win)
+
     # Update display
     pygame.display.update()
 
@@ -28,6 +31,7 @@ def menu_loop():
 
         # Update display
         redraw_menu()
+        clock.tick(30)
 
     pygame.quit()
     sys.exit()
@@ -58,6 +62,7 @@ if __name__ == "__main__":
     win = pygame.display.set_mode(window.rect.size)  # !!!
     # win = pygame.display.set_mode(window.win_size)
     pygame.display.set_caption("Chess")
+    clock = pygame.time.Clock()
     
     # Initialize windows
     menu = Menu()
