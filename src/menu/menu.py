@@ -1,4 +1,5 @@
 from window import window
+from .background import Background
 from .title import Title
 import pygame
 
@@ -6,7 +7,7 @@ pygame.init()
 
 
 class Menu:
-    display_size_divider = 8
+    display_size_divider = 4
 
     def __init__(self):
         wd, ht = window.rect.size
@@ -15,16 +16,26 @@ class Menu:
             ht // self.display_size_divider),
             pygame.SRCALPHA)
 
+        self.background = Background()
         self.title = Title()
 
-    def draw(self, display):
-        # Fill menu's display with a transparent background
-        self.display.fill((0, 0, 0, 0))
+    def draw_background(self, display):
+        # Draw background on display
+        self.background.draw(self.display)
 
-        # Draw menu window on menu's display
+        # Blit to original display
+        resized_menu_display = pygame.transform.scale(
+            self.display, display.get_size())
+        display.blit(resized_menu_display, (0, 0))
+
+    def draw_foreground(self, display):
+        # Fill display with an opaque background
+        self.display.fill((77, 43, 50, 180))
+
+        # Draw foreground on display
         self.title.draw(self.display)
 
-        # Blit menu's display to original display
+        # Blit to original display
         resized_menu_display = pygame.transform.scale(
             self.display, display.get_size())
         display.blit(resized_menu_display, (0, 0))

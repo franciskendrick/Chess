@@ -6,8 +6,12 @@ import sys
 
 # Redraws
 def redraw_menu():
+    # Draw background
     win.fill((77, 43, 50))
-    menu.draw(win)
+
+    # Draw menu
+    menu.draw_background(win)
+    menu.draw_foreground(win)
 
     # Update display
     pygame.display.update()

@@ -22,14 +22,14 @@ class Title:
         for img in clip_set_to_list_on_yaxis(animation_set):
             # Reize image
             wd, ht = img.get_size()
-            size = (wd * 2, ht * 2)
+            size = (wd * 4, ht * 4)
             img = pygame.transform.scale(img, size)
 
             # Append to frames
             self.frames.append(img)
 
         # Initialize rectangle
-        self.rect = pygame.Rect((9, 10), img.get_size())
+        self.rect = pygame.Rect((18, 20), img.get_size())
 
     def draw(self, display):
         # Reset
