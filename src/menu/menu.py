@@ -1,6 +1,7 @@
 from window import window
 from .background import Background
 from .title import Title
+from .buttons import Buttons
 import pygame
 
 pygame.init()
@@ -18,6 +19,7 @@ class Menu:
 
         self.background = Background()
         self.title = Title()
+        self.buttons = Buttons(self.display_size_divider)
 
     def draw_background(self, display):
         # Draw background on display
@@ -34,6 +36,7 @@ class Menu:
 
         # Draw foreground on display
         self.title.draw(self.display)
+        self.buttons.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(
