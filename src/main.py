@@ -33,6 +33,15 @@ def menu_loop():
             if event.type == pygame.QUIT:
                 run = False
 
+            # Menu buttons' down detection
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
+                btn_pressed = menu.buttons.button_down_detection()
+                print(btn_pressed)
+
+            # Menu buttons' over detection
+            if event.type == pygame.MOUSEMOTION:
+                menu.buttons.button_over_detection()
+
         # Update display
         redraw_menu()
         clock.tick(30)

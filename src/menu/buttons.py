@@ -13,9 +13,7 @@ resources_path = os.path.abspath(
 
 class Buttons:
     # Initialize
-    def __init__(self, display_size_divider):
-        enlarge = 2 * display_size_divider
-
+    def __init__(self, enlarge):
         # Images
         order = ["play", "options"]
         images = clip_set_to_list_on_yaxis(
@@ -42,7 +40,7 @@ class Buttons:
             img_rect = pygame.Rect(positions[name], img.get_rect().size)
             hitbox = pygame.Rect(
                 img_rect.x * enlarge, img_rect.y * enlarge,
-                img_rect.width * enlarge, img_rect.height * enlarge)
+                img_rect.width * 2 * enlarge, img_rect.height * 2 * enlarge)
 
             # Resize
             wd, ht = img.get_size()
@@ -70,11 +68,21 @@ class Buttons:
 
     # Action detection
     def button_down_detection(self):
-        pass
+        for (name, button) in self.buttons.items():
+            *_, hitbox = button
+
+            mouse_pos = pygame.mouse.get_pos()
+            if hitbox.collidepoint(mouse_pos):
+                return name
 
     def button_over_detection(self):
-        pass
+        for button in self.buttons.values():
+            *_, hitbox = button
+            
+            mouse_pos = pygame.mouse.get_pos()
+            button[0] = True if hitbox.collidepoint(mouse_pos) else False
 
     # Functions
     def reset_overdetection(self):
-        pass
+        for button in self.buttons.values():
+            button[0] = False
