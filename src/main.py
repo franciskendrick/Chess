@@ -1,5 +1,6 @@
 from window import window
 from menu import Menu
+from questions import Questions
 import pygame
 import sys
 
@@ -13,6 +14,18 @@ def redraw_menu():
     menu.draw_background(win)
     menu.draw_foreground(win)
 
+    # Update display
+    pygame.display.update()
+
+
+def redraw_questions():
+    # Draw background
+    win.fill((77, 43, 50))
+
+    # Draw questions
+    questions.draw_background(win)
+    questions.draw_foreground(win)
+     
     # Update display
     pygame.display.update()
 
@@ -36,7 +49,6 @@ def menu_loop():
             # Menu buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
                 btn_pressed = menu.buttons.button_down_detection()
-                print(btn_pressed)
 
             # Menu buttons' over detection
             if event.type == pygame.MOUSEMOTION:
@@ -45,6 +57,23 @@ def menu_loop():
         # Update display
         redraw_menu()
         clock.tick(30)
+
+    pygame.quit()
+    sys.exit()
+
+
+def questions_loop():
+    # Loop
+    run = True
+    while run:
+        # Event loop
+        for event in pygame.event.get():
+            # Quit detection
+            if event.type == pygame.QUIT:
+                run = False
+
+        # Update display
+        redraw_questions()
 
     pygame.quit()
     sys.exit()
@@ -79,6 +108,7 @@ if __name__ == "__main__":
     
     # Initialize windows
     menu = Menu()
+    questions = Questions()
 
     # Execute
-    menu_loop()
+    questions_loop()
