@@ -1,4 +1,5 @@
 from window import window
+from screens import Background
 import pygame
 
 pygame.init()
@@ -14,8 +15,11 @@ class Questions:
             ht // self.display_size_divider),
             pygame.SRCALPHA)
 
+        self.background = Background()
+
     def draw_background(self, display):
         # Draw background on display
+        self.background.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(

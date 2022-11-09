@@ -1,5 +1,5 @@
 from window import window
-from .background import Background
+from screens import Background
 from .title import Title
 from .buttons import Buttons
 import pygame
