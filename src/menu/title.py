@@ -20,7 +20,7 @@ class Title:
         # Get title animation's frames
         self.frames = []
         for img in clip_set_to_list_on_yaxis(animation_set):
-            # Reize image
+            # Resize image
             wd, ht = img.get_size()
             size = (wd * 4, ht * 4)
             img = pygame.transform.scale(img, size)

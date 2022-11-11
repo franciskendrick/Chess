@@ -1,5 +1,6 @@
 from window import window
 from screens import Background
+from .titles import Titles
 import pygame
 
 pygame.init()
@@ -16,6 +17,7 @@ class Questions:
             pygame.SRCALPHA)
 
         self.background = Background()
+        self.titles = Titles()
 
     def draw_background(self, display):
         # Draw background on display
@@ -31,6 +33,7 @@ class Questions:
         self.display.fill((77, 43, 50, 180))
 
         # Draw foreground on display
+        self.titles.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(
