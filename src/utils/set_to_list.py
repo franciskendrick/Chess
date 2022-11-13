@@ -37,7 +37,7 @@ def clip_set_to_list_on_xaxis(spriteset, y=0):
             images.append(img)
 
     # Unpack the images list if its values is less than one
-    [images] = [images] if len(images)> 1 else images
+    [images] = [images] if len(images) > 1 else images
     
     # Return
     return images
@@ -79,7 +79,7 @@ def clip_set_to_list_on_yaxis(spriteset, x=0):
             images.append(img)
 
     # Unpack the images list if its values is less than one
-    [images] = [images] if len(images)> 1 else images
+    [images] = [images] if len(images) > 1 else images
 
     # Return
     return images
