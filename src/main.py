@@ -48,7 +48,7 @@ def menu_loop():
 
             # Menu buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
-                btn_pressed = menu.buttons.button_down_detection()
+                button_pressed = menu.buttons.button_down_detection()
 
             # Menu buttons' over detection
             if event.type == pygame.MOUSEMOTION:
@@ -71,6 +71,14 @@ def questions_loop():
             # Quit detection
             if event.type == pygame.QUIT:
                 run = False
+
+            # Question buttons' down detection
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
+                questions.playvswho_buttons.button_down_detection()
+
+            # Question buttons' over detection
+            if event.type == pygame.MOUSEMOTION:
+                questions.playvswho_buttons.button_over_detection()
 
         # Update display
         redraw_questions()
