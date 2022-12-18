@@ -14,7 +14,7 @@ spritesets = separate_sets_from_yaxis(
     pygame.image.load(f"{resources_path}/descriptions.png"), (255, 0, 0))
 
 
-class PlayVsWhoDescription:
+class PlayAsDescription:
     # Initialize
     def __init__(self):
         # Images

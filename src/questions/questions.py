@@ -1,8 +1,8 @@
 from window import window
 from screens import Background
 from .titles import Titles
-from .buttons import PlayVsWhoButtons
-from .descriptions import PlayVsWhoDescription
+from .buttons import PlayAsButtons, PlayVsButtons
+from .descriptions import PlayAsDescription
 import pygame
 
 pygame.init()
@@ -21,9 +21,12 @@ class Questions:
         self.background = Background()
         self.titles = Titles()
 
-        # Play vs Who
-        self.playvswho_buttons = PlayVsWhoButtons(self.display_size_divider)
-        self.playvswho_description = PlayVsWhoDescription()
+        # I Play As...
+        self.playas_buttons = PlayAsButtons(self.display_size_divider)
+        self.playas_description = PlayAsDescription()
+
+        # Play Vs...
+        self.playvs_buttons = PlayVsButtons(self.display_size_divider)
 
     def draw_background(self, display):
         # Draw background on display
@@ -40,8 +43,11 @@ class Questions:
 
         # Draw foreground on display
         self.titles.draw(self.display)
-        self.playvswho_buttons.draw(self.display)
-        self.playvswho_description.draw(self.display)
+
+        self.playas_buttons.draw(self.display)
+        self.playas_description.draw(self.display)
+
+        self.playvs_buttons.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(
