@@ -242,3 +242,19 @@ class ChessClockButtons(ToggleableButtons):
 
     def __init__(self, enlarge):
         super().__init__(enlarge)
+
+
+class BlueButtons(TextButtons):
+    # Images
+    order = ["back", "reset", "next"]
+    images = clip_set_to_list_on_yaxis(spritesets[3])
+
+    # Positions
+    positions = {
+        "back": (55, 296),
+        "reset": (127, 296),
+        "next": (199, 296)
+    }
+
+    def __init__(self, enlarge):
+        super().__init__(enlarge)

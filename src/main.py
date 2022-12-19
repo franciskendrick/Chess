@@ -74,15 +74,23 @@ def questions_loop():
 
             # Question buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
+                # Toggle buttons
                 questions.playas_buttons.button_down_detection()
                 questions.playvs_buttons.button_down_detection()
                 questions.chessclock_buttons.button_down_detection()
 
+                # Text buttons
+                button_pressed = menu.buttons.button_down_detection()
+
             # Question buttons' over detection
             if event.type == pygame.MOUSEMOTION:
+                # Toggle buttons
                 questions.playas_buttons.button_over_detection()
                 questions.playvs_buttons.button_over_detection()
                 questions.chessclock_buttons.button_over_detection()
+
+                # Text buttons
+                questions.blue_buttons.button_over_detection()
 
         # Update display
         redraw_questions()
