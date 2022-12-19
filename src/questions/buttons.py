@@ -14,7 +14,8 @@ spritesets = separate_sets_from_yaxis(
     pygame.image.load(f"{resources_path}/buttons.png"), (255, 0, 0))
 
 
-class Buttons:
+# Parent classes
+class ToggleableButtons:
     # Initialize
     def __init__(self, enlarge):
         # Palette
@@ -105,17 +106,86 @@ class Buttons:
     def button_over_detection(self):
         for button in self.buttons.values():
             *_, hitbox = button
-            
+
             mouse_pos = pygame.mouse.get_pos()
             button[0] = True if hitbox.collidepoint(mouse_pos) else False
 
     # Functions
     def reset_overdetection(self):
         for button in self.buttons.values():
-            button[0] = False
+            button[0] = False  # hover status
 
 
-class PlayAsButtons(Buttons):
+
+class TextButtons:
+    # Initialize
+    def __init__(self, enlarge):
+        # Palette
+        hover_palette = {
+            (79, 143, 186): (37, 58, 94),
+            (115, 190, 211): (60, 94, 139),
+            (164, 221, 219): (79, 143, 186)}
+
+        # Buttons
+        self.buttons = {}
+        for name, img in zip(self.order, self.images):
+            # Initialize
+            hover_img = palette_swap(img.convert(), hover_palette)
+            img_rect = pygame.Rect(self.positions[name], img.get_rect().size)
+            hitbox = pygame.Rect(
+                img_rect.x * enlarge, img_rect.y * enlarge,
+                img_rect.width * 2 * enlarge, img_rect.height * 2 * enlarge)
+            
+            # Resize
+            wd, ht = img.get_size()
+            size = (wd * 2, ht * 2)
+            img = pygame.transform.scale(img, size)
+            hover_img = pygame.transform.scale(hover_img, size)
+
+            # Append
+            button = [
+                False,  # is hovered
+                img,  # orig image
+                hover_img,  # hover image
+                img_rect,  # image rectangle
+                hitbox  # hitbox
+            ]
+            self.buttons[name] = button
+
+    # Draw
+    def draw(self, display):
+        for button in self.buttons.values():
+            is_hovered, orig_img, hover_img, img_rect, _ = button
+            img = hover_img if is_hovered else orig_img
+
+            # Blit to display
+            display.blit(img, img_rect)
+
+    # Action detection
+    def button_down_detection(self):
+        for (name, button) in self.buttons.items():
+            *_, hitbox = button
+
+            mouse_pos = pygame.mouse.get_pos()
+            if hitbox.collidepoint(mouse_pos):
+                return name
+
+    def button_over_detection(self):
+        for button in self.buttons.values():
+            *_, hitbox = button
+
+            mouse_pos = pygame.mouse.get_pos()
+            button[0] = True if hitbox.collidepoint(mouse_pos) else False
+
+    # Functions
+    def reset_overdetection(self):
+        for button in self.buttons.values():
+            button[0] = False  # hover status
+
+
+
+# Child classes
+class PlayAsButtons(ToggleableButtons):
     # Images
     order = ["white", "random", "black"]
     images = clip_set_to_list_on_yaxis(spritesets[0])
@@ -131,7 +201,7 @@ class PlayAsButtons(Buttons):
         super().__init__(enlarge)
 
 
-class PlayVsButtons(Buttons):
+class PlayVsButtons(ToggleableButtons):
     # Images
     order = ["easy", "medium", "hard"]
     images = clip_set_to_list_on_yaxis(spritesets[1])
@@ -147,7 +217,7 @@ class PlayVsButtons(Buttons):
         super().__init__(enlarge)
 
 
-class ChessClockButtons(Buttons):
+class ChessClockButtons(ToggleableButtons):
     # Images
     order = [
         "none", "10min", "5min", 
