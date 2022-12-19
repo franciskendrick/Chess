@@ -2,7 +2,7 @@ from window import window
 from screens import Background
 from .titles import Titles
 from .buttons import PlayAsButtons, PlayVsButtons
-from .descriptions import PlayAsDescription
+from .descriptions import PlayAsDescription, PlayVsDescription
 import pygame
 
 pygame.init()
@@ -27,6 +27,7 @@ class Questions:
 
         # Play Vs...
         self.playvs_buttons = PlayVsButtons(self.display_size_divider)
+        self.playvs_description = PlayVsDescription()
 
     def draw_background(self, display):
         # Draw background on display
@@ -48,6 +49,7 @@ class Questions:
         self.playas_description.draw(self.display)
 
         self.playvs_buttons.draw(self.display)
+        self.playvs_description.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(

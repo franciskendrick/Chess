@@ -1,4 +1,4 @@
-from utils import clip_set_to_list_on_xaxis, separate_sets_from_yaxis
+from utils import clip_set_to_list_on_xaxis, clip_set_to_list_on_yaxis, separate_sets_from_xaxis, separate_sets_from_yaxis
 import pygame
 import os
 
@@ -41,3 +41,49 @@ class PlayAsDescription:
         for img, rect in self.descriptions.values():
             # Blit to display
             display.blit(img, rect)
+
+
+class PlayVsDescription:
+    # Initialize
+    def __init__(self):
+        # Images
+        self.order = ["easy", "medium", "hard"]
+        spritesets_ = separate_sets_from_xaxis(spritesets[1], (255, 0, 0))
+
+        # Positions
+        positions = {
+            "easy": (48, 160),
+            "medium": (130, 160),
+            "hard": (216, 160)
+        }
+
+        # Buttons
+        self.descriptions = {}
+        for name, spriteset in zip(self.order, spritesets_):
+            images = clip_set_to_list_on_yaxis(spriteset)
+            self.descriptions[name] = [
+                0,  # idx
+                images,  # image
+                pygame.Rect(positions[name], images[0].get_rect().size)  # rectangle
+            ]
+        
+        # Animation
+        self.idx_addingto = 0
+
+    # Draw
+    def draw(self, display):
+        for name, (_, images, rect) in self.descriptions.items():
+            # Reset
+            if self.descriptions[self.order[self.idx_addingto]][0] >= (len(images)) * 10:
+                self.idx_addingto += 1
+                if self.idx_addingto >= len(self.order):
+                    self.idx_addingto = 0
+                    for name_ in self.descriptions.keys():
+                        self.descriptions[name_][0] = 0  # idx
+            
+            # Blit to display
+            idx = self.descriptions[name][0]
+            display.blit(images[idx // 10], rect)
+
+            # Update
+            self.descriptions[self.order[self.idx_addingto]][0] += 1  # idx

@@ -84,6 +84,7 @@ def questions_loop():
 
         # Update display
         redraw_questions()
+        clock.tick(30)
 
     pygame.quit()
     sys.exit()
