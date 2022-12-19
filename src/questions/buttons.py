@@ -145,3 +145,30 @@ class PlayVsButtons(Buttons):
 
     def __init__(self, enlarge):
         super().__init__(enlarge)
+
+
+class ChessClockButtons(Buttons):
+    # Images
+    order = [
+        "none", "10min", "5min", 
+        "3min", "1min", "60min",
+        "30min", "20min", "30sec"]
+    images = clip_set_to_list_on_yaxis(spritesets[2])
+
+    # Positions
+    positions = {
+        "none": (46, 212),
+        "10min": (124, 212),
+        "5min": (202, 212),
+
+        "3min": (46, 236),
+        "1min": (124, 236),
+        "60min": (202, 236),
+
+        "30min": (46, 260),
+        "20min": (124, 260),
+        "30sec": (202, 260)
+    }
+
+    def __init__(self, enlarge):
+        super().__init__(enlarge)

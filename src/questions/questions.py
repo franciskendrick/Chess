@@ -1,7 +1,7 @@
 from window import window
 from screens import Background
 from .titles import Titles
-from .buttons import PlayAsButtons, PlayVsButtons
+from .buttons import PlayAsButtons, PlayVsButtons, ChessClockButtons
 from .descriptions import PlayAsDescription, PlayVsDescription
 import pygame
 
@@ -29,6 +29,9 @@ class Questions:
         self.playvs_buttons = PlayVsButtons(self.display_size_divider)
         self.playvs_description = PlayVsDescription()
 
+        # Chess Clock
+        self.chessclock_buttons = ChessClockButtons(self.display_size_divider)
+
     def draw_background(self, display):
         # Draw background on display
         self.background.draw(self.display)
@@ -50,6 +53,8 @@ class Questions:
 
         self.playvs_buttons.draw(self.display)
         self.playvs_description.draw(self.display)
+
+        self.chessclock_buttons.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(
