@@ -49,6 +49,11 @@ def menu_loop():
             # Menu buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
                 button_pressed = menu.buttons.button_down_detection()
+                if button_pressed == "play":
+                    menu.buttons.reset_overdetection()
+                    questions_loop(menu_loop)
+                elif button_pressed == "options":
+                    pass  # !!!
 
             # Menu buttons' over detection
             if event.type == pygame.MOUSEMOTION:
@@ -62,7 +67,7 @@ def menu_loop():
     sys.exit()
 
 
-def questions_loop():
+def questions_loop(from_loop):
     # Loop
     run = True
     while run:
@@ -132,4 +137,4 @@ if __name__ == "__main__":
     questions = Questions()
 
     # Execute
-    questions_loop()
+    menu_loop()
