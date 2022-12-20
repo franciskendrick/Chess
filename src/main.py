@@ -85,7 +85,14 @@ def questions_loop(from_loop):
                 questions.chessclock_buttons.button_down_detection()
 
                 # Text buttons
-                button_pressed = menu.buttons.button_down_detection()
+                button_pressed = questions.blue_buttons.button_down_detection()
+                if button_pressed == "back":
+                    questions.buttons_reset_overdetection()
+                    from_loop()
+                elif button_pressed == "reset":
+                    questions.reset()
+                elif button_pressed == "next":
+                    pass  # !!!
 
             # Question buttons' over detection
             if event.type == pygame.MOUSEMOTION:
