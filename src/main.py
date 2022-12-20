@@ -69,7 +69,7 @@ def menu_loop():
 
         # Update display
         redraw_menu()
-        clock.tick(30)
+        clock.tick(window.framerate)
 
     pygame.quit()
     sys.exit()
@@ -122,7 +122,7 @@ def questions_loop(from_loop):
 
         # Update display
         redraw_questions()
-        clock.tick(30)
+        clock.tick(window.framerate)
 
     pygame.quit()
     sys.exit()

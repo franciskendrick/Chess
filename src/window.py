@@ -17,6 +17,9 @@ class Window:
     enlarge = (pygame.display.Info().current_h - 80) / rect.height
     win_size = (int(rect.width * enlarge), int(rect.height * enlarge))
 
+    # Framerate
+    framerate = 60
+
     # Initialize
     def __init__(self):
         # Saved questions settings

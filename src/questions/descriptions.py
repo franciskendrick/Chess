@@ -74,7 +74,7 @@ class PlayVsDescription:
     def draw(self, display):
         for name, (_, images, rect) in self.descriptions.items():
             # Reset
-            if self.descriptions[self.order[self.idx_addingto]][0] >= (len(images)) * 10:
+            if self.descriptions[self.order[self.idx_addingto]][0] >= (len(images)) * 20:
                 self.idx_addingto += 1
                 if self.idx_addingto >= len(self.order):
                     self.idx_addingto = 0
@@ -83,7 +83,7 @@ class PlayVsDescription:
             
             # Blit to display
             idx = self.descriptions[name][0]
-            display.blit(images[idx // 10], rect)
+            display.blit(images[idx // 20], rect)
 
             # Update
             self.descriptions[self.order[self.idx_addingto]][0] += 1  # idx

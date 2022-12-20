@@ -33,11 +33,11 @@ class Title:
 
     def draw(self, display):
         # Reset
-        if self.idx >= len(self.frames) * 5:
+        if self.idx >= len(self.frames) * 10:
             self.idx = 0
 
         # Draw
-        img = self.frames[self.idx // 5]
+        img = self.frames[self.idx // 10]
         display.blit(img, self.rect)
 
         # Update
