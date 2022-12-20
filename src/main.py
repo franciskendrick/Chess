@@ -46,6 +46,14 @@ def menu_loop():
             if event.type == pygame.QUIT:
                 run = False
 
+                # Update questions' settings' JSON
+                questions_settings = {
+                    "play_as": questions.playas_buttons,
+                    "play_vs": questions.playvs_buttons,
+                    "chess_clock": questions.chessclock_buttons
+                }
+                window.update_questionssettings(questions_settings)
+
             # Menu buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
                 button_pressed = menu.buttons.button_down_detection()
@@ -76,6 +84,14 @@ def questions_loop(from_loop):
             # Quit detection
             if event.type == pygame.QUIT:
                 run = False
+
+                # Update questions' settings' JSON
+                questions_settings = {
+                    "play_as": questions.playas_buttons,
+                    "play_vs": questions.playvs_buttons,
+                    "chess_clock": questions.chessclock_buttons
+                }
+                window.update_questionssettings(questions_settings)
 
             # Question buttons' down detection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # left-clicked has been uped
@@ -121,6 +137,14 @@ def game_loop():
             # Quit detection
             if event.type == pygame.QUIT:
                 run = False
+
+                # Update questions' settings' JSON
+                questions_settings = {
+                    "play_as": questions.playas_buttons,
+                    "play_vs": questions.playvs_buttons,
+                    "chess_clock": questions.chessclock_buttons
+                }
+                window.update_questionssettings(questions_settings)
 
         # Update display
         redraw_game()

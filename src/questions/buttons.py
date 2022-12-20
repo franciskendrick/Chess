@@ -1,4 +1,5 @@
 from utils import clip_set_to_list_on_yaxis, separate_sets_from_yaxis, palette_swap
+from window import window
 import pygame
 import os
 
@@ -10,6 +11,7 @@ resources_path = os.path.abspath(
         )
     )
 
+# Spritesets
 spritesets = separate_sets_from_yaxis(
     pygame.image.load(f"{resources_path}/buttons.png"), (255, 0, 0))
 
@@ -200,6 +202,9 @@ class PlayAsButtons(ToggleableButtons):
     def __init__(self, enlarge):
         super().__init__(enlarge)
 
+        # Update previously used toggle status
+        self.buttons[window.saved_questions_settings["play_as"]][1] = True  # toggle status
+
 
 class PlayVsButtons(ToggleableButtons):
     # Images
@@ -215,6 +220,9 @@ class PlayVsButtons(ToggleableButtons):
 
     def __init__(self, enlarge):
         super().__init__(enlarge)
+
+        # Update previously used toggle status
+        self.buttons[window.saved_questions_settings["play_vs"]][1] = True  # toggle status
 
 
 class ChessClockButtons(ToggleableButtons):
@@ -242,6 +250,9 @@ class ChessClockButtons(ToggleableButtons):
 
     def __init__(self, enlarge):
         super().__init__(enlarge)
+
+        # Update previously used toggle status
+        self.buttons[window.saved_questions_settings["chess_clock"]][1] = True  # toggle status
 
 
 class BlueButtons(TextButtons):
