@@ -35,6 +35,11 @@ def redraw_game():
     pygame.display.update()
 
 
+def redraw_options():
+    # Update display
+    pygame.display.update()
+
+
 # Loops
 def menu_loop():
     # Loop
@@ -61,7 +66,8 @@ def menu_loop():
                     menu.buttons.reset_overdetection()
                     questions_loop(menu_loop)
                 elif button_pressed == "options":
-                    pass  # !!!
+                    menu.buttons.reset_overdetection()
+                    options_loop()
 
             # Menu buttons' over detection
             if event.type == pygame.MOUSEMOTION:
@@ -108,7 +114,8 @@ def questions_loop(from_loop):
                 elif button_pressed == "reset":
                     questions.reset()
                 elif button_pressed == "next":
-                    pass  # !!!
+                    questions.buttons_reset_overdetection()
+                    game_loop()
 
             # Question buttons' over detection
             if event.type == pygame.MOUSEMOTION:
@@ -149,6 +156,31 @@ def game_loop():
         # Update display
         redraw_game()
 
+    pygame.quit()
+    sys.exit()
+
+
+def options_loop():
+    # Loop
+    run = True
+    while run:
+        # Event loop
+        for event in pygame.event.get():
+            # Quit detection
+            if event.type == pygame.QUIT:
+                run = False
+
+                # Update questions' settings' JSON
+                questions_settings = {
+                    "play_as": questions.playas_buttons,
+                    "play_vs": questions.playvs_buttons,
+                    "chess_clock": questions.chessclock_buttons
+                }
+                window.update_questionssettings(questions_settings)
+        
+        # Update display
+        redraw_options()
+    
     pygame.quit()
     sys.exit()
 
