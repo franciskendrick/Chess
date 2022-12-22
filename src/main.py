@@ -1,6 +1,7 @@
 from window import window
 from menu import Menu
 from questions import Questions
+from game import Game
 import pygame
 import sys
 
@@ -31,6 +32,12 @@ def redraw_questions():
 
 
 def redraw_game():
+    # Draw background
+    win.fill((77, 43, 50))
+
+    # Draw game
+    game.draw_background(win)
+    
     # Update display
     pygame.display.update()
 
@@ -198,6 +205,7 @@ if __name__ == "__main__":
     # Initialize windows
     menu = Menu()
     questions = Questions()
+    game = Game()
 
     # Execute
-    menu_loop()
+    game_loop()
