@@ -37,6 +37,7 @@ def redraw_game():
 
     # Draw game
     game.draw_background(win)
+    game.draw_midground(win)
     
     # Update display
     pygame.display.update()

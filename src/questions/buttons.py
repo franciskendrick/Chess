@@ -118,7 +118,6 @@ class ToggleableButtons:
             button[0] = False  # hover status
 
 
-
 class TextButtons:
     # Initialize
     def __init__(self, enlarge):
@@ -183,7 +182,6 @@ class TextButtons:
     def reset_overdetection(self):
         for button in self.buttons.values():
             button[0] = False  # hover status
-
 
 
 # Child classes

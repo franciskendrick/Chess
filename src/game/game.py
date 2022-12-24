@@ -1,5 +1,6 @@
 from window import window
 from screens import Background
+from .profiles import Profiles
 import pygame
 
 pygame.init()
@@ -11,10 +12,20 @@ class Game:
             window.rect.size, pygame.SRCALPHA)
 
         self.background = Background()
+        self.profiles = Profiles()
 
     def draw_background(self, display):
         # Draw background on display
         self.background.draw(self.display)
+
+        # Blit to original display
+        resized_menu_display = pygame.transform.scale(
+            self.display, display.get_size())
+        display.blit(resized_menu_display, (0, 0))
+
+    def draw_midground(self, display):
+        # Draw midground on display
+        self.profiles.draw(self.display)
 
         # Blit to original display
         resized_menu_display = pygame.transform.scale(
