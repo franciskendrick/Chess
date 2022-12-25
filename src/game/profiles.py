@@ -17,8 +17,6 @@ class Profiles:
         order = ["you", "alexander"]
         spritesets = separate_sets_from_xaxis(
             pygame.image.load(f"{resources_path}/player_profiles.png"), (255, 0, 0))
-
-        # Images
         images = {
             "you": clip_set_to_list_on_xaxis(spritesets[0]),
             "alexander": clip_set_to_list_on_xaxis(spritesets[1])
