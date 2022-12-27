@@ -11,7 +11,7 @@ resources_path = os.path.abspath(
     )
 
 spritesets = separate_sets_from_yaxis(
-    pygame.image.load(f"{resources_path}/descriptions.png"), (255, 0, 0))
+    pygame.image.load(f"{resources_path}/descriptions.png"))
 
 
 class PlayAsDescription:
@@ -48,7 +48,7 @@ class PlayVsDescription:
     def __init__(self):
         # Images
         self.order = ["easy", "medium", "hard"]
-        spritesets_ = separate_sets_from_xaxis(spritesets[1], (255, 0, 0))
+        spritesets_ = separate_sets_from_xaxis(spritesets[1])
 
         # Positions
         positions = {

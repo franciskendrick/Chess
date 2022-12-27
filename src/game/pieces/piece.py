@@ -11,7 +11,7 @@ resources_path = os.path.abspath(
     )
 
 white_spriteset, black_spriteset = separate_sets_from_yaxis(
-    pygame.image.load(f"{resources_path}/pieces.png"), (255, 0, 0))
+    pygame.image.load(f"{resources_path}/pieces.png"))
 
 
 class Piece:

@@ -13,7 +13,7 @@ resources_path = os.path.abspath(
 
 # Spritesets
 spritesets = separate_sets_from_yaxis(
-    pygame.image.load(f"{resources_path}/buttons.png"), (255, 0, 0))
+    pygame.image.load(f"{resources_path}/buttons.png"))
 
 
 # Parent classes

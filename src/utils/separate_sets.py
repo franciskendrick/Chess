@@ -1,7 +1,7 @@
 from .clip import clip
 
 
-def separate_sets_from_xaxis(spriteset, separator_color, y=0):
+def separate_sets_from_xaxis(spriteset, separator_color=(255, 0, 0), y=0):
     separated_sets = []
     current_wd = 0
 
@@ -31,7 +31,7 @@ def separate_sets_from_xaxis(spriteset, separator_color, y=0):
     return separated_sets
 
 
-def separate_sets_from_yaxis(spriteset, separator_color, x=0):
+def separate_sets_from_yaxis(spriteset, separator_color=(255, 0, 0), x=0):
     separated_sets = []
     current_ht = 0
 
