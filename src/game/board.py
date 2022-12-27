@@ -5,9 +5,16 @@ pygame.init()
 
 
 class Board:
-    def __init__(self):
-        self.board = [[0 for _ in range(8)] for _ in range(8)]
+    board_truesize = (512, 512)
 
+    def __init__(self):
+        self.board_surface = pygame.Surface((128, 128), pygame.SRCALPHA)
+        self.board = [[0 for _ in range(8)] for _ in range(8)]
+        self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
+
+        self.init_pieces()
+
+    def init_pieces(self):  # !!! TEMPORARY
         # Black
         self.board[0][0] = Rook(0, 0, "b")
         self.board[0][1] = Knight(0, 1, "b")
@@ -45,3 +52,19 @@ class Board:
         self.board[6][5] = Pawn(6, 5, "w")
         self.board[6][6] = Pawn(6, 6, "w")
         self.board[6][7] = Pawn(6, 7, "w")
+
+    def draw(self, display):
+        # Draw board on board's surface
+        for y, row in enumerate(self.board):
+            for x, square in enumerate(row):
+                if square != 0:  # if not an empty square
+                    # Get pos
+                    rect = self.rects[y][x]
+                    pos = (rect.x + square.offset[0], rect.y + square.offset[1])
+
+                    self.board_surface.blit(square.image, pos)
+
+        # Blit to game's display
+        resized_board_surface = pygame.transform.scale(
+            self.board_surface, self.board_truesize)
+        display.blit(resized_board_surface, (64, 64))

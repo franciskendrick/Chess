@@ -9,6 +9,7 @@ class King(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][0]
+        self.offset = (1, 1)
 
     def valid_moves(self, board):
         pass

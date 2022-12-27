@@ -9,6 +9,7 @@ class Pawn(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][5]
+        self.offset = (4, 3)
 
     def valid_moves(self, board):
         pass

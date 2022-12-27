@@ -9,6 +9,7 @@ class Bishop(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][3]
+        self.offset = (3, 1)
 
     def valid_moves(self, board):
         pass

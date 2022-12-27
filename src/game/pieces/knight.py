@@ -9,6 +9,7 @@ class Knight(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][4]
+        self.offset = (2, 1)
 
     def valid_moves(self, board):
         pass

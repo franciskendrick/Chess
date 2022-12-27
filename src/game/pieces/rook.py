@@ -9,6 +9,7 @@ class Rook(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][2]
+        self.offset = (3, 1)
 
     def valid_moves(self, board):
         pass

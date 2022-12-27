@@ -1,6 +1,7 @@
 from window import window
 from screens import Background
 from .profiles import Profiles
+from .board import Board
 import pygame
 
 pygame.init()
@@ -13,6 +14,7 @@ class Game:
 
         self.background = Background()
         self.profiles = Profiles()
+        self.board = Board()
 
     def draw_background(self, display):
         # Draw background on display
@@ -33,4 +35,10 @@ class Game:
         display.blit(resized_menu_display, (0, 0))
 
     def draw_foreground(self, display):
-        pass
+        # Draw foreground on display
+        self.board.draw(self.display)
+
+        # Blit to originial display
+        resized_menu_display = pygame.transform.scale(
+            self.display, display.get_size())
+        display.blit(resized_menu_display, (0, 0))

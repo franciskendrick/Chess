@@ -38,6 +38,7 @@ def redraw_game():
     # Draw game
     game.draw_background(win)
     game.draw_midground(win)
+    game.draw_foreground(win)
     
     # Update display
     pygame.display.update()
@@ -198,7 +199,7 @@ if __name__ == "__main__":
     pygame.init()
 
     # Initialize window
-    win = pygame.display.set_mode(window.rect.size)  # !!!
+    win = pygame.display.set_mode(window.rect.size)  # !!! TEMPORARY
     # win = pygame.display.set_mode(window.win_size)
     pygame.display.set_caption("Chess")
     clock = pygame.time.Clock()
