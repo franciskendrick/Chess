@@ -7,12 +7,17 @@ pygame.init()
 class Board:
     board_truesize = (512, 512)
 
+    # Initialize
     def __init__(self):
+        # Board
         self.board_surface = pygame.Surface((128, 128), pygame.SRCALPHA)
         self.board = [[0 for _ in range(8)] for _ in range(8)]
         self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
 
         self.init_pieces()
+
+        # Action detection
+        self.previously_selected = None
 
     def init_pieces(self):  # !!! TEMPORARY
         # Black
@@ -53,18 +58,40 @@ class Board:
         self.board[6][6] = Pawn(6, 6, "w")
         self.board[6][7] = Pawn(6, 7, "w")
 
+    # Draw
     def draw(self, display):
+        self.board_surface.fill((0, 0, 0, 0))
+
         # Draw board on board's surface
         for y, row in enumerate(self.board):
             for x, square in enumerate(row):
                 if square != 0:  # if not an empty square
-                    # Get pos
-                    rect = self.rects[y][x]
-                    pos = (rect.x + square.offset[0], rect.y + square.offset[1])
-
-                    self.board_surface.blit(square.image, pos)
+                    # Blit to board's surface
+                    square.draw(self.board_surface, self.rects[y][x])
 
         # Blit to game's display
         resized_board_surface = pygame.transform.scale(
             self.board_surface, self.board_truesize)
         display.blit(resized_board_surface, (64, 64))
+
+    # Action detection
+    def down_detection(self):
+        # Updated previously selected's "selected" status to false
+        if self.previously_selected != None:
+            self.previously_selected.is_selected = False
+
+        # Get the square where mouse is clicked
+        mouse_pos = pygame.mouse.get_pos()
+        for y, row in enumerate(self.board):
+            for x, square in enumerate(row):
+                if square != 0:  # if not an empty square
+                    # Get hitbox
+                    rect = self.rects[y][x]
+                    hitbox = pygame.Rect(
+                        rect.x * 4 + 64, rect.y * 4 + 64, 64, 64)
+
+                    # Check if rectangle is colliding with mouse's position
+                    if hitbox.collidepoint(mouse_pos):
+                        square.is_selected = True
+                        self.previously_selected = square
+                        break
