@@ -15,6 +15,7 @@ white_spriteset, black_spriteset = separate_sets_from_yaxis(
 
 
 class Piece:
+    rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
     images = {
         "w": clip_set_to_list_on_xaxis(white_spriteset),  # white
         "b": clip_set_to_list_on_xaxis(black_spriteset)  # black
@@ -24,6 +25,7 @@ class Piece:
         # Position
         self.row = row
         self.col = col
+        self.rect = self.rects[self.row][self.col]
 
         # Color
         self.color = color
@@ -35,16 +37,21 @@ class Piece:
         # Status
         self.is_selected = False
 
-    def draw(self, surface, rect):
+    def draw(self, surface, valid_moves):
         # Draw "selected" attachment
         if self.is_selected:
-            # Draw
+            # Draw attachment
             bkg = pygame.Surface((16, 16), pygame.SRCALPHA)
             bkg.fill((164, 221, 219, 128))
-            surface.blit(bkg, rect)
-                        
-            surface.blit(self.attachments, rect)
+            surface.blit(bkg, self.rect)
+            surface.blit(self.attachments, self.rect)
+
+            # Draw valid moves
+            for (x, y) in valid_moves:
+                circle = pygame.Surface((16, 16), pygame.SRCALPHA)
+                pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 2)
+                surface.blit(circle, self.rects[y][x])
 
         # Draw piece
-        pos = (rect.x + self.offset[0], rect.y + self.offset[1])
+        pos = (self.rect.x + self.offset[0], self.rect.y + self.offset[1])
         surface.blit(self.image, pos)

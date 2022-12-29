@@ -14,7 +14,8 @@ class Board:
         self.board = [[0 for _ in range(8)] for _ in range(8)]
         self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
 
-        self.init_pieces()
+        # self.init_pieces()
+        self.board[3][4] = Rook(3, 4, "b")  # !!! TEMPORARY
 
         # Action detection
         self.previously_selected = None
@@ -63,11 +64,12 @@ class Board:
         self.board_surface.fill((0, 0, 0, 0))
 
         # Draw board on board's surface
-        for y, row in enumerate(self.board):
-            for x, square in enumerate(row):
+        for row in self.board:
+            for square in row:
                 if square != 0:  # if not an empty square
                     # Blit to board's surface
-                    square.draw(self.board_surface, self.rects[y][x])
+                    square.draw(
+                        self.board_surface, square.valid_moves(self.board))
 
         # Blit to game's display
         resized_board_surface = pygame.transform.scale(
