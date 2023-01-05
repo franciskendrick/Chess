@@ -15,7 +15,7 @@ class Board:
         self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
 
         # self.init_pieces()
-        self.board[3][4] = Queen(3, 4, "w")  # !!! TEMPORARY
+        self.board[0][6] = Knight(0, 6, "w")  # !!! TEMPORARY
 
         # Action detection
         self.previously_selected = None
