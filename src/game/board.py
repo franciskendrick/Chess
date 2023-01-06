@@ -15,7 +15,7 @@ class Board:
         self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
 
         # self.init_pieces()
-        self.board[3][4] = Rook(3, 4, "w")  # !!! TEMPORARY
+        self.board[3][4] = Bishop(3, 4, "w")  # !!! TEMPORARY
 
         # Action detection
         self.previously_selected = None
@@ -99,14 +99,14 @@ class Board:
                         self.previously_selected = square
                         self.currently_selected = square
                     elif self.currently_selected != None and (x, y) in self.currently_selected.valid_moves(self.board):
+                        # Get currently selected position
                         px = self.currently_selected.row  # previous x
                         py = self.currently_selected.col  # previous y
 
+                        # Update board
                         self.board[px][py] = 0
                         self.board[y][x] = self.currently_selected
-
                         self.currently_selected.move(y, x)
-
                         self.currently_selected = None
                     else:  # empty square
                         self.currently_selected = None

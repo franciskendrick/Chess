@@ -55,3 +55,9 @@ class Piece:
         # Draw piece
         pos = (self.rect.x + self.offset[0], self.rect.y + self.offset[1])
         surface.blit(self.image, pos)
+
+    def move(self, row, col):
+        # Position
+        self.row = row
+        self.col = col
+        self.rect = self.rects[self.row][self.col]
