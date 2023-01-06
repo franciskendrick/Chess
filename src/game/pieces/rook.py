@@ -63,3 +63,9 @@ class Rook(Piece):
 
         # Return
         return valid_moves
+
+    def move(self, row, col):
+        # Position
+        self.row = row
+        self.col = col
+        self.rect = self.rects[self.row][self.col]
