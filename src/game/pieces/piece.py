@@ -37,7 +37,7 @@ class Piece:
         # Status
         self.is_selected = False
 
-    def draw(self, surface, valid_moves):
+    def draw(self, surface):
         # Draw "selected" attachment
         if self.is_selected:
             # Draw attachment
@@ -45,12 +45,6 @@ class Piece:
             bkg.fill((164, 221, 219, 128))
             surface.blit(bkg, self.rect)
             surface.blit(self.attachments, self.rect)
-
-            # Draw valid moves
-            for (x, y) in valid_moves:
-                circle = pygame.Surface((16, 16), pygame.SRCALPHA)
-                pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 2)
-                surface.blit(circle, self.rects[y][x])
 
         # Draw piece
         pos = (self.rect.x + self.offset[0], self.rect.y + self.offset[1])

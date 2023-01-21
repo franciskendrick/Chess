@@ -23,24 +23,24 @@ class King(Piece):
             if col > 0:
                 square = board[row - 1][col - 1]
                 if square == 0:
-                    valid_moves.append((col - 1, row - 1))
-                elif square.color != square.color:
-                    valid_moves.append((col - 1, row - 1))
+                    valid_moves.append((0, col - 1, row - 1))
+                elif square.color != self.color:
+                    valid_moves.append((1, col - 1, row - 1))
 
             # Top Middle
             square = board[row - 1][col]
             if square == 0:
-                valid_moves.append((col, row - 1))
-            elif square.color != square.color:
-                valid_moves.append((col, row - 1))
+                valid_moves.append((0, col, row - 1))
+            elif square.color != self.color:
+                valid_moves.append((1, col, row - 1))
 
             # Top Right
             if col < 7:
                 square = board[row - 1][col + 1]
                 if square == 0:
-                    valid_moves.append((col + 1, row - 1))
-                elif square.color != square.color:
-                    valid_moves.append((col + 1, row - 1))
+                    valid_moves.append((0, col + 1, row - 1))
+                elif square.color != self.color:
+                    valid_moves.append((1, col + 1, row - 1))
 
 
         # Bottom
@@ -49,40 +49,40 @@ class King(Piece):
             if col > 0:
                 square = board[row + 1][col - 1]
                 if square == 0:
-                    valid_moves.append((col - 1, row + 1))
-                elif square.color != square.color:
-                    valid_moves.append((col - 1, row + 1))
+                    valid_moves.append((0, col - 1, row + 1))
+                elif square.color != self.color:
+                    valid_moves.append((1, col - 1, row + 1))
 
             # Bottom Middle
             square = board[row + 1][col]
             if square == 0:
-                valid_moves.append((col, row + 1))
-            elif square.color != square.color:
-                valid_moves.append((col, row + 1))
+                valid_moves.append((0, col, row + 1))
+            elif square.color != self.color:
+                valid_moves.append((1, col, row + 1))
 
             # Bottom Right
             if col < 7:
                 square = board[row + 1][col + 1]
                 if square == 0:
-                    valid_moves.append((col + 1, row + 1))
-                elif square.color != square.color:
-                    valid_moves.append((col + 1, row + 1))
+                    valid_moves.append((0, col + 1, row + 1))
+                elif square.color != self.color:
+                    valid_moves.append((1, col + 1, row + 1))
 
         # left Middle
         if col > 0:
             square = board[row][col - 1]
             if square == 0:
-                valid_moves.append((col - 1, row))
-            elif square.color != square.color:
-                valid_moves.append((col - 1, row))
+                valid_moves.append((0, col - 1, row))
+            elif square.color != self.color:
+                valid_moves.append((1, col - 1, row))
 
         # Right Middle
         if col < 7:
             square = board[row][col + 1]
             if square == 0:
-                valid_moves.append((col + 1, row))
-            elif square.color != square.color:
-                valid_moves.append((col + 1, row))
+                valid_moves.append((0, col + 1, row))
+            elif square.color != self.color:
+                valid_moves.append((1, col + 1, row))
 
         # Return
         return valid_moves

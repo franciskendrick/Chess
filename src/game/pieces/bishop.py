@@ -23,9 +23,9 @@ class Bishop(Piece):
             if x <= 7:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
@@ -38,9 +38,9 @@ class Bishop(Piece):
             if x >= 0:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
@@ -53,9 +53,9 @@ class Bishop(Piece):
             if x <= 7:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
@@ -68,9 +68,9 @@ class Bishop(Piece):
             if x >= 0:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break

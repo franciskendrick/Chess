@@ -162,7 +162,7 @@ def game_loop():
                 }
                 window.update_questionssettings(questions_settings)
 
-            # Board's down detection
+            # Board's qdown detection
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # left-clicked has been downed
                 game.board.down_detection()
 

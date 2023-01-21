@@ -15,7 +15,8 @@ class Board:
         self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
 
         # self.init_pieces()
-        self.board[3][4] = King(3, 4, "w")  # !!! TEMPORARY
+        self.board[6][4] = Queen(6, 4, "w")  # !!! TEMPORARY
+        self.board[1][1] = King(1, 1, "b")  # !!! TEMPORARY
 
         # Action detection
         self.previously_selected = None
@@ -65,12 +66,25 @@ class Board:
         self.board_surface.fill((0, 0, 0, 0))
 
         # Draw board on board's surface
+        pieces = []
         for row in self.board:
             for square in row:
                 if square != 0:  # if not an empty square
-                    # Blit to board's surface
-                    square.draw(
-                        self.board_surface, square.valid_moves(self.board))
+                    # Draw valid moves
+                    if square.is_selected:
+                        for (is_piece, x, y) in square.valid_moves(self.board):
+                            circle = pygame.Surface((16, 16), pygame.SRCALPHA)
+                            if is_piece:
+                                pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 10, 2)
+                            else:
+                                pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 2)
+                            self.board_surface.blit(circle, self.rects[y][x])
+
+                    # Append square to pieces
+                    pieces.append(square)
+
+        for piece in pieces:  # draw pieces
+            piece.draw(self.board_surface)
 
         # Blit to game's display
         resized_board_surface = pygame.transform.scale(
@@ -94,20 +108,24 @@ class Board:
 
                 # Check if rectangle is colliding with mouse's position
                 if hitbox.collidepoint(mouse_pos):
-                    if square != 0:  # if not an empty square
-                        square.is_selected = True
-                        self.previously_selected = square
-                        self.currently_selected = square
-                    elif self.currently_selected != None and (x, y) in self.currently_selected.valid_moves(self.board):
+                    if self.currently_selected != None and (  # moving and taking pieces
+                            (0, x, y) in self.currently_selected.valid_moves(self.board) or 
+                            (1, x, y) in self.currently_selected.valid_moves(self.board)):
                         # Get currently selected position
-                        px = self.currently_selected.row  # previous x
-                        py = self.currently_selected.col  # previous y
+                        py = self.currently_selected.row  # previous x
+                        px = self.currently_selected.col  # previous y
 
                         # Update board
-                        self.board[px][py] = 0
+                        self.board[py][px] = 0
                         self.board[y][x] = self.currently_selected
                         self.currently_selected.move(y, x)
                         self.currently_selected = None
+                    
+                    elif square != 0:  # if not an empty square
+                        square.is_selected = True
+                        self.previously_selected = square
+                        self.currently_selected = square
+
                     else:  # empty square
                         self.currently_selected = None
 

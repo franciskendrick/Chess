@@ -21,9 +21,9 @@ class Queen(Piece):
         for y in range(row - 1, -1, -1):
             square = board[y][col]
             if square == 0:  # if an empty square
-                valid_moves.append((col, y))
+                valid_moves.append((0, col, y))
             elif square.color != self.color:  # if there is a opponent piece
-                valid_moves.append((col, y))
+                valid_moves.append((1, col, y))
                 break
             else:  # if there is an ally piece
                 break
@@ -32,9 +32,9 @@ class Queen(Piece):
         for y in range(row + 1, 8):
             square = board[y][col]
             if square == 0:  # if an empty square
-                valid_moves.append((col, y))
+                valid_moves.append((0, col, y))
             elif square.color != self.color:  # if there is a opponent piece
-                valid_moves.append((col, y))
+                valid_moves.append((1, col, y))
                 break
             else:  # if there is an ally piece
                 break
@@ -43,9 +43,9 @@ class Queen(Piece):
         for x in range(col - 1, -1, -1):
             square = board[row][x]
             if square == 0:  # if an empty square
-                valid_moves.append((x, row))
+                valid_moves.append((0, x, row))
             elif square.color != self.color:  # if there is a opponent piece
-                valid_moves.append((x, row))
+                valid_moves.append((1, x, row))
                 break
             else:  # if there is an ally piece
                 break
@@ -54,9 +54,9 @@ class Queen(Piece):
         for x in range(col + 1, 8):
             square = board[row][x]
             if square == 0:  # if an empty square
-                valid_moves.append((x, row))
+                valid_moves.append((0, x, row))
             elif square.color != self.color:  # if there is a opponent piece
-                valid_moves.append((x, row))
+                valid_moves.append((1, x, row))
                 break
             else:  # if there is an ally piece
                 break
@@ -67,9 +67,9 @@ class Queen(Piece):
             if x <= 7:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
@@ -82,9 +82,9 @@ class Queen(Piece):
             if x >= 0:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
@@ -97,9 +97,9 @@ class Queen(Piece):
             if x <= 7:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
@@ -112,9 +112,9 @@ class Queen(Piece):
             if x >= 0:
                 square = board[y][x]
                 if square == 0:  # if an empty square
-                    valid_moves.append((x, y))
+                    valid_moves.append((0, x, y))
                 elif square.color != self.color:  # if there is a opponent piece
-                    valid_moves.append((x, y))
+                    valid_moves.append((1, x, y))
                     break
                 else:  # if there is an ally piece
                     break
