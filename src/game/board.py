@@ -5,7 +5,23 @@ pygame.init()
 
 
 class Board:
+    # Board
     board_truesize = (512, 512)
+
+    # Pieces
+    pieces_arangement = {
+        "white": [  # play as white
+            "R", "N", "B", "Q", "K", "B", "N", "R"],
+        "black": [  # play as black
+            "R", "N", "B", "K", "Q", "B", "N", "R"]
+    }
+    pieces_switchcase = {
+        "K": King,
+        "Q": Queen,
+        "R": Rook,
+        "N": Knight,
+        "B": Bishop
+    }
 
     # Initialize
     def __init__(self):
@@ -14,52 +30,20 @@ class Board:
         self.board = [[0 for _ in range(8)] for _ in range(8)]
         self.rects = [[pygame.Rect(x, y, 16, 16) for x in range(0, 16*8, 16)] for y in range(0, 16*8, 16)]
 
-        # self.init_pieces()
-        self.board[6][4] = Queen(6, 4, "w")  # !!! TEMPORARY
-        self.board[1][1] = King(1, 1, "b")  # !!! TEMPORARY
-
         # Action detection
         self.previously_selected = None
         self.currently_selected = None
 
-    def init_pieces(self):  # !!! TEMPORARY
-        # Black
-        self.board[0][0] = Rook(0, 0, "b")
-        self.board[0][1] = Knight(0, 1, "b")
-        self.board[0][2] = Bishop(0, 2, "b")
-        self.board[0][3] = Queen(0, 3, "b")
-        self.board[0][4] = King(0, 4, "b")
-        self.board[0][5] = Bishop(0, 5, "b")
-        self.board[0][6] = Knight(0, 6, "b")
-        self.board[0][7] = Rook(0, 7, "b")
+    def init_pieces(self, play_as):
+        color = ["b", "w"] if play_as == "white" else ["w", "b"]
+        for i, piece in enumerate(self.pieces_arangement[play_as]):
+            # Top
+            self.board[0][i] = self.pieces_switchcase[piece](0, i, color[0])
+            self.board[1][i] = Pawn(1, i, color[0])
 
-        self.board[1][0] = Pawn(1, 0, "b")
-        self.board[1][1] = Pawn(1, 1, "b")
-        self.board[1][2] = Pawn(1, 2, "b")
-        self.board[1][3] = Pawn(1, 3, "b")
-        self.board[1][4] = Pawn(1, 4, "b")
-        self.board[1][5] = Pawn(1, 5, "b")
-        self.board[1][6] = Pawn(1, 6, "b")
-        self.board[1][7] = Pawn(1, 7, "b")
-
-        # White
-        self.board[7][0] = Rook(7, 0, "w")
-        self.board[7][1] = Knight(7, 1, "w")
-        self.board[7][2] = Bishop(7, 2, "w")
-        self.board[7][3] = Queen(7, 3, "w")
-        self.board[7][4] = King(7, 4, "w")
-        self.board[7][5] = Bishop(7, 5, "w")
-        self.board[7][6] = Knight(7, 6, "w")
-        self.board[7][7] = Rook(7, 7, "w")
-
-        self.board[6][0] = Pawn(6, 0, "w")
-        self.board[6][1] = Pawn(6, 1, "w")
-        self.board[6][2] = Pawn(6, 2, "w")
-        self.board[6][3] = Pawn(6, 3, "w")
-        self.board[6][4] = Pawn(6, 4, "w")
-        self.board[6][5] = Pawn(6, 5, "w")
-        self.board[6][6] = Pawn(6, 6, "w")
-        self.board[6][7] = Pawn(6, 7, "w")
+            # Bottom
+            self.board[7][i] = self.pieces_switchcase[piece](7, i, color[1])
+            self.board[6][i] = Pawn(6, i, color[1])
 
     # Draw
     def draw(self, display):

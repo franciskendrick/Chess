@@ -3,6 +3,7 @@ from menu import Menu
 from questions import Questions
 from game import Game
 import pygame
+import random
 import sys
 
 
@@ -124,7 +125,7 @@ def questions_loop(from_loop):
                     questions.reset()
                 elif button_pressed == "next":
                     questions.buttons_reset_overdetection()
-                    game_loop()
+                    game_loop(questions.get_selected())
 
             # Question buttons' over detection
             if event.type == pygame.MOUSEMOTION:
@@ -144,7 +145,12 @@ def questions_loop(from_loop):
     sys.exit()
 
 
-def game_loop():
+def game_loop(selected):
+    play_as = selected["play_as"]
+    if play_as == "random":
+        play_as = random.choice(["black", "white"])
+    game.board.init_pieces(play_as)
+
     # Loop
     run = True
     while run:
@@ -162,7 +168,7 @@ def game_loop():
                 }
                 window.update_questionssettings(questions_settings)
 
-            # Board's qdown detection
+            # Board's down detection
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # left-clicked has been downed
                 game.board.down_detection()
 
@@ -214,4 +220,4 @@ if __name__ == "__main__":
     game = Game()
 
     # Execute
-    game_loop()
+    menu_loop()

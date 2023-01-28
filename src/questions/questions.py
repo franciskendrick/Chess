@@ -97,3 +97,10 @@ class Questions:
         self.playvs_buttons.reset_overdetection()
         self.chessclock_buttons.reset_overdetection()
         self.blue_buttons.reset_overdetection()
+
+    def get_selected(self):
+        return {
+            "play_as": self.playas_buttons.get_selected(),
+            "play_vs": self.playvs_buttons.get_selected(),
+            "chess_clock": self.chessclock_buttons.get_selected()
+        }

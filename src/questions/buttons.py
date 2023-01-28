@@ -117,6 +117,11 @@ class ToggleableButtons:
         for button in self.buttons.values():
             button[0] = False  # hover status
 
+    def get_selected(self):
+        for name, (_, toggle_status, *_) in self.buttons.items():
+            if toggle_status:
+                return name
+
 
 class TextButtons:
     # Initialize
