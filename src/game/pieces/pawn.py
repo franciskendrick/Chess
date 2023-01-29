@@ -11,6 +11,7 @@ class Pawn(Piece):
         self.image = self.images[color][5]
         self.offset = (4, 3)
         self.play_as = play_as
+        self.first_move = True
 
     def valid_moves(self, board):
         row = self.row
@@ -24,6 +25,11 @@ class Pawn(Piece):
                 square = board[row - 1][col]
                 if square == 0:
                     valid_moves.append((0, col, row - 1))
+
+                if self.first_move:
+                    square = board[row - 2][col]
+                    if square == 0:
+                        valid_moves.append((0, col, row - 2))
 
                 # Eating at Top Left
                 square = board[row - 1][col - 1]
@@ -41,6 +47,11 @@ class Pawn(Piece):
                 square = board[row + 1][col]
                 if square == 0:
                     valid_moves.append((0, col, row + 1))
+
+                if self.first_move:
+                    square = board[row + 2][col]
+                    if square == 0:
+                        valid_moves.append((0, col, row + 2))
 
                 # Eating at Bottom Left
                 square = board[row + 1][col - 1]

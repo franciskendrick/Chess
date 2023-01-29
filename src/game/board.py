@@ -99,6 +99,10 @@ class Board:
                         py = self.currently_selected.row  # previous x
                         px = self.currently_selected.col  # previous y
 
+                        # 
+                        if isinstance(self.currently_selected, Pawn):
+                            self.currently_selected.first_move = False
+
                         # Update board
                         self.board[py][px] = 0
                         self.board[y][x] = self.currently_selected
