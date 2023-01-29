@@ -39,11 +39,11 @@ class Board:
         for i, piece in enumerate(self.pieces_arangement[play_as]):
             # Top
             self.board[0][i] = self.pieces_switchcase[piece](0, i, color[0])
-            self.board[1][i] = Pawn(1, i, color[0])
+            self.board[1][i] = Pawn(1, i, color[0], play_as)
 
             # Bottom
             self.board[7][i] = self.pieces_switchcase[piece](7, i, color[1])
-            self.board[6][i] = Pawn(6, i, color[1])
+            self.board[6][i] = Pawn(6, i, color[1], play_as)
 
     # Draw
     def draw(self, display):
