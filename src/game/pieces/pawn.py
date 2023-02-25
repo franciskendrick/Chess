@@ -26,7 +26,7 @@ class Pawn(Piece):
                 if square == 0:
                     valid_moves.append((0, col, row - 1))
 
-                if self.first_move:
+                if self.first_move and board[row - 1][col] == 0:
                     square = board[row - 2][col]
                     if square == 0:
                         valid_moves.append((0, col, row - 2))
@@ -48,7 +48,7 @@ class Pawn(Piece):
                 if square == 0:
                     valid_moves.append((0, col, row + 1))
 
-                if self.first_move:
+                if self.first_move and board[row + 1][col] == 0:
                     square = board[row + 2][col]
                     if square == 0:
                         valid_moves.append((0, col, row + 2))

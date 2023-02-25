@@ -33,6 +33,7 @@ class Board:
         # Action detection
         self.previously_selected = None
         self.currently_selected = None
+        self.last_move = None  # piece, from position, current position
 
     def init_pieces(self, play_as):
         color = ["b", "w"] if play_as == "white" else ["w", "b"]
@@ -95,6 +96,7 @@ class Board:
                     if self.currently_selected != None and (  # moving and taking pieces
                             (0, x, y) in self.currently_selected.valid_moves(self.board) or 
                             (1, x, y) in self.currently_selected.valid_moves(self.board)):
+                            (0, x, y) in self.currently_selected.valid_moves(self.board, self.last_move) or 
                         # Get currently selected position
                         py = self.currently_selected.row  # previous x
                         px = self.currently_selected.col  # previous y
