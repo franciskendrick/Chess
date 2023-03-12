@@ -33,7 +33,8 @@ class Board:
         # Action detection
         self.previously_selected = None
         self.currently_selected = None
-        self.last_move = None  # piece, from position, current position
+        self.last_move = None  # color, piece, from position, current position
+        self.move_number = 0
 
     def init_pieces(self, play_as):
         color = ["b", "w"] if play_as == "white" else ["w", "b"]
@@ -57,13 +58,15 @@ class Board:
                 if square != 0:  # if not an empty square
                     # Draw valid moves
                     if square.is_selected:
-                        for (is_piece, x, y) in square.valid_moves(self.board):
-                            circle = pygame.Surface((16, 16), pygame.SRCALPHA)
-                            if is_piece:
-                                pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 10, 2)
-                            else:
-                                pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 2)
-                            self.board_surface.blit(circle, self.rects[y][x])
+                        if self.move_number == 0 and square.color == "w" or (  # first move or selected piece is not equal to last move's color
+                                square.color != self.last_move["color"]):
+                            for (is_piece, x, y) in square.valid_moves(self.board, self.last_move):
+                                circle = pygame.Surface((16, 16), pygame.SRCALPHA)
+                                if is_piece:
+                                    pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 10, 2)
+                                else:
+                                    pygame.draw.circle(circle, (235, 237, 233, 150), (8, 8), 2)
+                                self.board_surface.blit(circle, self.rects[y][x])
 
                     # Append square to pieces
                     pieces.append(square)
@@ -94,23 +97,39 @@ class Board:
                 # Check if rectangle is colliding with mouse's position
                 if hitbox.collidepoint(mouse_pos):
                     if self.currently_selected != None and (  # moving and taking pieces
-                            (0, x, y) in self.currently_selected.valid_moves(self.board) or 
-                            (1, x, y) in self.currently_selected.valid_moves(self.board)):
                             (0, x, y) in self.currently_selected.valid_moves(self.board, self.last_move) or 
-                        # Get currently selected position
-                        py = self.currently_selected.row  # previous x
-                        px = self.currently_selected.col  # previous y
+                            (1, x, y) in self.currently_selected.valid_moves(self.board, self.last_move)):
+                        if self.move_number == 0 and self.currently_selected.color == "w" or (  # first move or selected piece is not equal to last move's color
+                                self.currently_selected.color != self.last_move["color"]):
 
-                        # 
-                        if isinstance(self.currently_selected, Pawn):
-                            self.currently_selected.first_move = False
+                            # Get currently selected position
+                            py = self.currently_selected.row  # previous x
+                            px = self.currently_selected.col  # previous y
 
-                        # Update board
-                        self.board[py][px] = 0
-                        self.board[y][x] = self.currently_selected
-                        self.currently_selected.move(y, x)
-                        self.currently_selected = None
-                    
+                            # If Pawn, update its "first move" variable
+                            if isinstance(self.currently_selected, Pawn):
+                                self.currently_selected.first_move = False
+
+                            # Update last move
+                            self.last_move = {
+                                "color": self.currently_selected.color,
+                                "piece": type(self.currently_selected),
+                                "from": (py, px),
+                                "current": (y, x)
+                            }
+
+                            # Update move number
+                            if self.currently_selected.color == "w":
+                                self.move_number += 1
+
+                            # Update board
+                            self.board[py][px] = 0
+                            self.board[y][x] = self.currently_selected
+
+                            # Update piece
+                            self.currently_selected.move(y, x)
+                            self.currently_selected = None
+
                     elif square != 0:  # if not an empty square
                         square.is_selected = True
                         self.previously_selected = square

@@ -11,7 +11,7 @@ class Bishop(Piece):
         self.image = self.images[color][3]
         self.offset = (3, 1)
 
-    def valid_moves(self, board):
+    def valid_moves(self, board, _):
         row = self.row
         col = self.col
 

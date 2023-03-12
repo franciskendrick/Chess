@@ -11,7 +11,7 @@ class King(Piece):
         self.image = self.images[color][0]
         self.offset = (1, 1)
 
-    def valid_moves(self, board):
+    def valid_moves(self, board, _):
         row = self.row
         col = self.col
 

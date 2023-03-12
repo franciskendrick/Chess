@@ -11,7 +11,7 @@ class Knight(Piece):
         self.image = self.images[color][4]
         self.offset = (2, 1)
 
-    def valid_moves(self, board):
+    def valid_moves(self, board, _):
         row = self.row
         col = self.col
 

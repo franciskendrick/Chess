@@ -13,7 +13,9 @@ class Pawn(Piece):
         self.play_as = play_as
         self.first_move = True
 
-    def valid_moves(self, board):
+    def valid_moves(self, board, last_move):
+    # print(last_move)  # color, piece, from position, current position --> if beside
+
         row = self.row
         col = self.col
 
