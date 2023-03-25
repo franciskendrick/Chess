@@ -37,6 +37,8 @@ class Board:
         self.move_number = 0
 
     def init_pieces(self, play_as):
+        self.play_as = play_as
+
         color = ["b", "w"] if play_as == "white" else ["w", "b"]
         for i, piece in enumerate(self.pieces_arangement[play_as]):
             # Top
@@ -96,46 +98,51 @@ class Board:
 
                 # Check if rectangle is colliding with mouse's position
                 if hitbox.collidepoint(mouse_pos):
-                    if self.currently_selected != None:
-                        valid_moves = self.currently_selected.valid_moves(self.board, self.last_move)
-                        if (0, x, y) in valid_moves or (1, x, y) in valid_moves or (2, x, y) in valid_moves:  # moving and taking pieces
-                            if self.move_number == 0 and self.currently_selected.color == "w" or (  # first move or selected piece is not equal to last move's color
-                                    self.currently_selected.color != self.last_move["color"]):
+                    if self.currently_selected != None and (  # moving and taking pieces
+                            (0, x, y) in self.currently_selected.valid_moves(self.board, self.last_move) or 
+                            (1, x, y) in self.currently_selected.valid_moves(self.board, self.last_move) or
+                            (2, x, y) in self.currently_selected.valid_moves(self.board, self.last_move)):
+                        if self.move_number == 0 and self.currently_selected.color == "w" or (  # first move or selected piece is not equal to last move's color
+                                self.currently_selected.color != self.last_move["color"]):
 
-                                # Get currently selected position
-                                py = self.currently_selected.row  # previous x
-                                px = self.currently_selected.col  # previous y
+                            valid_moves = self.currently_selected.valid_moves(self.board, self.last_move)
 
-                                # If Pawn, update its "first move" variable
-                                if isinstance(self.currently_selected, Pawn):
-                                    self.currently_selected.first_move = False
+                            # Get currently selected position
+                            py = self.currently_selected.row  # previous x
+                            px = self.currently_selected.col  # previous y
 
-                                # Update last move
-                                self.last_move = {
-                                    "color": self.currently_selected.color,
-                                    "piece": type(self.currently_selected),
-                                    "from": (py, px),
-                                    "current": (y, x)
-                                }
+                            # If Pawn, update its "first move" variable
+                            if isinstance(self.currently_selected, Pawn):
+                                self.currently_selected.first_move = False
 
-                                # Update move number
-                                if self.currently_selected.color == "w":
-                                    self.move_number += 1
+                            # Update last move
+                            self.last_move = {
+                                "color": self.currently_selected.color,
+                                "piece": type(self.currently_selected),
+                                "from": (py, px),
+                                "current": (y, x)
+                            }
 
-                                # Update board
-                                self.board[py][px] = 0
-                                self.board[y][x] = self.currently_selected
-                                # Update board when en passant
-                                for valid_move in valid_moves:
-                                    if valid_move[0] == 2:  # en passant
-                                        ly, lx = self.last_move["current"]
-                                        offset = 1 if self.last_move["color"] == "w" else -1
-                                        self.board[ly + offset][lx] = 0
-                                        break
+                            # Update move number
+                            if self.currently_selected.color == "w":
+                                self.move_number += 1
 
-                                # Update piece
-                                self.currently_selected.move(y, x)
-                                self.currently_selected = None
+                            # Update board
+                            self.board[py][px] = 0
+                            self.board[y][x] = self.currently_selected
+                            # Update board when en passant
+                            for valid_move in valid_moves:
+                                if valid_move[0] == 2:  # en passant
+                                    ly, lx = self.last_move["current"]
+                                    color = "w" if self.play_as == "white" else "b"
+                                    offset = 1 if self.last_move["color"] == color else -1
+                                    self.board[ly + offset][lx] = 0
+                                    
+                                    break
+
+                            # Update piece
+                            self.currently_selected.move(y, x)
+                            self.currently_selected = None
 
                     elif square != 0:  # if not an empty square
                         square.is_selected = True
