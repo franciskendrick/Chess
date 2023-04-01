@@ -32,14 +32,16 @@ class Pawn(Piece):
                         valid_moves.append((0, col, row - 2))
 
                 # Eating at Top Left
-                square = board[row - 1][col - 1]
-                if square != 0 and square.color != self.color:
-                    valid_moves.append((1, col - 1, row - 1))
+                if col > 0:  # if statement is here to prevent errors in capturing (col values may go to: -1 or 8)
+                    square = board[row - 1][col - 1]
+                    if square != 0 and square.color != self.color:
+                        valid_moves.append((1, col - 1, row - 1))
 
                 # Eating at Top Right
-                square = board[row - 1][col + 1]
-                if square != 0 and square.color != self.color:
-                    valid_moves.append((1, col + 1, row - 1))
+                if col < 7:  # if statement is here to prevent errors in capturing (col values may go to: -1 or 8)
+                    square = board[row - 1][col + 1]
+                    if square != 0 and square.color != self.color:
+                        valid_moves.append((1, col + 1, row - 1))
 
                 # En Passant
                 if last_move != None and last_move["piece"] == Pawn:
@@ -64,14 +66,16 @@ class Pawn(Piece):
                         valid_moves.append((0, col, row + 2))
 
                 # Eating at Bottom Left
-                square = board[row + 1][col - 1]
-                if square != 0 and square.color != self.color:
-                    valid_moves.append((1, col - 1, row + 1))
+                if col > 0:  # if statement is here to prevent errors in capturing (col values may go to: -1 or 8)
+                    square = board[row + 1][col - 1]
+                    if square != 0 and square.color != self.color:
+                        valid_moves.append((1, col - 1, row + 1))
 
                 # Eating at Bottom Right
-                square = board[row + 1][col + 1]
-                if square != 0 and square.color != self.color:
-                    valid_moves.append((1, col + 1, row + 1))
+                if col < 7:  # if statement is here to prevent errors in capturing (col values may go to: -1 or 8)
+                    square = board[row + 1][col + 1]
+                    if square != 0 and square.color != self.color:
+                        valid_moves.append((1, col + 1, row + 1))
 
                 # En Passant
                 if last_move != None and last_move["piece"] == Pawn:
