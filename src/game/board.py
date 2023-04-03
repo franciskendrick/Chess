@@ -61,7 +61,7 @@ class Board:
                     # Draw valid moves
                     if square.is_selected:
                         if self.move_number == 0 and square.color == "w" or (  # first move or selected piece is not equal to last move's color
-                                square.color != self.last_move["color"]):
+                                self.last_move != None and square.color != self.last_move["color"]):
                             for (is_piece, x, y) in square.valid_moves(self.board, self.last_move):
                                 circle = pygame.Surface((16, 16), pygame.SRCALPHA)
                                 if is_piece:
