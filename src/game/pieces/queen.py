@@ -9,7 +9,7 @@ class Queen(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][1]
-        self.offset = (1, 1)
+        self.offset = self.offsets[1]
 
     def valid_moves(self, board, _):
         row = self.row

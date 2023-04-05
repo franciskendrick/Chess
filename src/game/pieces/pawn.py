@@ -9,9 +9,9 @@ class Pawn(Piece):
         super().__init__(row, col, color)
 
         self.image = self.images[color][5]
-        self.offset = (4, 3)
+        self.offset = self.offsets[5]
         self.play_as = play_as
-        self.first_move = True
+        self.first_move = False  # !!! TEMPORARY
 
     def valid_moves(self, board, last_move):
         row = self.row
