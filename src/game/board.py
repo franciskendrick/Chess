@@ -161,3 +161,7 @@ class Board:
                         self.currently_selected = None
 
                     break
+
+    def over_detection(self):
+        if isinstance(self.previously_selected, Pawn) and self.previously_selected.on_promotion:
+            self.previously_selected.button_over_detection()

@@ -39,7 +39,6 @@ class Piece:
 
         # Status
         self.is_selected = False
-        self.on_promotion = False
 
     def draw(self, surface):
         # Draw "selected" attachment
@@ -61,16 +60,15 @@ class Piece:
             bkg.fill((9, 10, 20, 68))
             surface.blit(bkg, (0, 0))
 
-            # Draw promotion's background attachment
+            # Draw buttons
+            for button in self.promotion_buttons.values():
+                is_hovered, orig_img, hover_img, pos, _  = button
+                img = hover_img if is_hovered else orig_img
+                surface.blit(img, pos)
+
+            # Draw frame attachment
             pos = (self.rect.x - 2, self.rect.y)
             surface.blit(self.attachments[1], pos)
-
-            # Draw pieces
-            for j, i in enumerate(range(1, 5)):
-                image = self.images[self.color][i]
-                offset = self.offsets[i]
-                pos = (self.rect.x + offset[0], self.rect.y + offset[1] + 16*j)
-                surface.blit(image, pos)
 
     def move(self, row, col):
         # Position

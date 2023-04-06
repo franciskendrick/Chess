@@ -5,14 +5,51 @@ pygame.init()
 
 
 class Pawn(Piece):
+    # Initialize
     def __init__(self, row, col, color, play_as):
         super().__init__(row, col, color)
 
         self.image = self.images[color][5]
         self.offset = self.offsets[5]
         self.play_as = play_as
+
+        # Status 
         self.first_move = False  # !!! TEMPORARY
 
+        # Promotion
+        order = ["queen", "rook", "bishop", "knight"]
+        self.on_promotion = False
+        self.promotion_buttons = {}
+        for i, name in enumerate(order, 1):
+            offset = self.offsets[i]
+
+            # Initialize original surface
+            surface = pygame.Surface((16, 16))
+            surface.fill((215, 181, 148))
+            surface.blit(self.images[self.color][i], offset)
+
+            # Initialize hover surface
+            hover_surf = pygame.Surface((16, 16))
+            hover_surf.fill((192, 148, 115))
+            hover_surf.blit(self.images[self.color][i], offset)
+
+            # Initialize position & hitbox
+            pos = (self.rect.x, 16*(i-1))
+            hitbox = pygame.Rect(  # !!! CLEAN THIS CODE
+                pos[0] * 4 + 64, pos[1] * 4 + 64, 
+                self.rect.w * 4, self.rect.h * 4)
+
+            # Append
+            button = [
+                False,  # is hovered
+                surface,  # original surface
+                hover_surf,  # hover surface
+                pos,  # position
+                hitbox  # hitbox
+            ]
+            self.promotion_buttons[name] = button
+
+    # Valid moves
     def valid_moves(self, board, last_move):
         row = self.row
         col = self.col
@@ -89,3 +126,11 @@ class Pawn(Piece):
 
         # Return
         return valid_moves
+
+    # Action detection
+    def button_over_detection(self):
+        for button in self.promotion_buttons.values():
+            *_, hitbox = button
+            
+            mouse_pos = pygame.mouse.get_pos()
+            button[0] = True if hitbox.collidepoint(mouse_pos) else False
