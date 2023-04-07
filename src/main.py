@@ -172,9 +172,11 @@ def game_loop(selected):
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # left-clicked has been downed
                 game.board.down_detection()
 
+                game.board.promotion_down_detection()
+
             # Board's over detection
             if event.type == pygame.MOUSEMOTION:
-                game.board.over_detection()
+                game.board.promotion_over_detection()
 
         # Update display
         redraw_game()

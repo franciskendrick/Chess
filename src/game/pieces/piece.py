@@ -39,6 +39,7 @@ class Piece:
 
         # Status
         self.is_selected = False
+        self.on_promotion = False
 
     def draw(self, surface):
         # Draw "selected" attachment

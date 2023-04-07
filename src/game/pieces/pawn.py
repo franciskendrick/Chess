@@ -14,11 +14,13 @@ class Pawn(Piece):
         self.play_as = play_as
 
         # Status 
-        self.first_move = False  # !!! TEMPORARY
+        self.first_move = True
 
-        # Promotion
+    def init_promotion(self):
         order = ["queen", "rook", "bishop", "knight"]
-        self.on_promotion = False
+        board_enlarge = 4
+    
+        self.has_paused = False
         self.promotion_buttons = {}
         for i, name in enumerate(order, 1):
             offset = self.offsets[i]
@@ -35,9 +37,9 @@ class Pawn(Piece):
 
             # Initialize position & hitbox
             pos = (self.rect.x, 16*(i-1))
-            hitbox = pygame.Rect(  # !!! CLEAN THIS CODE
-                pos[0] * 4 + 64, pos[1] * 4 + 64, 
-                self.rect.w * 4, self.rect.h * 4)
+            hitbox = pygame.Rect(
+                pos[0] * board_enlarge + 64, pos[1] * board_enlarge + 64, 
+                self.rect.w * board_enlarge, self.rect.h * board_enlarge)
 
             # Append
             button = [
@@ -128,6 +130,14 @@ class Pawn(Piece):
         return valid_moves
 
     # Action detection
+    def button_down_detection(self):
+        for (name, button) in self.promotion_buttons.items():
+            *_, hitbox = button
+            
+            mouse_pos = pygame.mouse.get_pos()
+            if hitbox.collidepoint(mouse_pos):
+                return name
+
     def button_over_detection(self):
         for button in self.promotion_buttons.values():
             *_, hitbox = button

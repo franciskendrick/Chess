@@ -39,18 +39,15 @@ class Board:
     def init_pieces(self, play_as):
         self.play_as = play_as
 
-        # !!! TEMPORARY
         color = ["b", "w"] if play_as == "white" else ["w", "b"]
-        # for i, piece in enumerate(self.pieces_arangement[play_as]):
-        #     # Top
-        #     self.board[0][i] = self.pieces_switchcase[piece](0, i, color[0])
-        #     self.board[1][i] = Pawn(1, i, color[0], play_as)
+        for i, piece in enumerate(self.pieces_arangement[play_as]):
+            # Top
+            self.board[0][i] = self.pieces_switchcase[piece](0, i, color[0])
+            self.board[1][i] = Pawn(1, i, color[0], play_as)
 
-        #     # Bottom
-        #     self.board[7][i] = self.pieces_switchcase[piece](7, i, color[1])
-        #     self.board[6][i] = Pawn(6, i, color[1], play_as)
-
-        self.board[1][4] = Pawn(1, 4, color[1], play_as)
+            # Bottom
+            self.board[7][i] = self.pieces_switchcase[piece](7, i, color[1])
+            self.board[6][i] = Pawn(6, i, color[1], play_as)
 
     # Draw
     def draw(self, display):
@@ -114,15 +111,6 @@ class Board:
                             py = self.currently_selected.row  # previous x
                             px = self.currently_selected.col  # previous y
 
-                            # Do updates if piece is a Pawn
-                            if isinstance(self.currently_selected, Pawn):
-                                # Update Pawn's "first move" variable
-                                self.currently_selected.first_move = False
-                                
-                                # Update piece's "on_promotion" variable
-                                if y == 0:  # piece is on the other side of the board
-                                    self.currently_selected.on_promotion = True
-
                             # Update last move
                             self.last_move = {
                                 "color": self.currently_selected.color,
@@ -148,8 +136,21 @@ class Board:
                                     
                                     break
 
-                            # Update piece
+                            # Move piece
                             self.currently_selected.move(y, x)
+
+                            # Do updates if piece is a Pawn
+                            if isinstance(self.currently_selected, Pawn):
+                                # Update Pawn's "first move" variable
+                                self.currently_selected.first_move = False
+                                
+                                # Update piece's "on_promotion" variable & Over detection
+                                if y == 0:  # piece is on the other side of the board
+                                    self.currently_selected.on_promotion = True
+                                    self.currently_selected.init_promotion()
+                                    self.previously_selected.button_over_detection()
+
+                            # Delete memory of currently selected
                             self.currently_selected = None
 
                     elif square != 0:  # if not an empty square
@@ -162,6 +163,21 @@ class Board:
 
                     break
 
-    def over_detection(self):
-        if isinstance(self.previously_selected, Pawn) and self.previously_selected.on_promotion:
-            self.previously_selected.button_over_detection()
+    def promotion_down_detection(self):
+        promotion_switchcase = {
+            "queen": Queen,
+            "rook": Rook,
+            "bishop": Bishop,
+            "knight": Knight
+        }
+
+        for piece in self.board[0]:
+            if isinstance(piece, Pawn) and piece.on_promotion and piece.has_paused:
+                promoting_to = piece.button_down_detection()
+                self.board[0][piece.col] = promotion_switchcase[promoting_to](0, piece.col, piece.color)
+
+    def promotion_over_detection(self):
+        prev = self.previously_selected
+        if isinstance(prev, Pawn) and prev.on_promotion:
+            prev.button_over_detection()
+            prev.has_paused = True
