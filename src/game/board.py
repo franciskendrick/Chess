@@ -38,6 +38,7 @@ class Board:
 
     def init_pieces(self, play_as):
         self.play_as = play_as
+        self.user_pawns = []
 
         color = ["b", "w"] if play_as == "white" else ["w", "b"]
         for i, piece in enumerate(self.pieces_arangement[play_as]):
@@ -46,8 +47,10 @@ class Board:
             self.board[1][i] = Pawn(1, i, color[0], play_as)
 
             # Bottom
+            pawn = Pawn(6, i, color[1], play_as)
             self.board[7][i] = self.pieces_switchcase[piece](7, i, color[1])
-            self.board[6][i] = Pawn(6, i, color[1], play_as)
+            self.board[6][i] = pawn
+            self.user_pawns.append(pawn)
 
     # Draw
     def draw(self, display):
@@ -75,6 +78,10 @@ class Board:
 
         for piece in pieces:  # draw pieces
             piece.draw(self.board_surface)
+
+        for pawn in self.user_pawns:
+            if pawn.on_promotion:
+                pawn.draw_promotion(self.board_surface)
 
         # Blit to game's display
         resized_board_surface = pygame.transform.scale(

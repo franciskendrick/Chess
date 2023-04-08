@@ -54,22 +54,21 @@ class Piece:
         pos = (self.rect.x + self.offset[0], self.rect.y + self.offset[1])
         surface.blit(self.image, pos)
 
-        # Draw "promotion" attachment
-        if self.on_promotion:
-            # Draw board's background
-            bkg = pygame.Surface((128, 128), pygame.SRCALPHA)
-            bkg.fill((9, 10, 20, 68))
-            surface.blit(bkg, (0, 0))
+    def draw_promotion(self, surface):  # draw "promotion" attachment
+        # Draw board's background
+        bkg = pygame.Surface((128, 128), pygame.SRCALPHA)
+        bkg.fill((9, 10, 20, 68))
+        surface.blit(bkg, (0, 0))
 
-            # Draw buttons
-            for button in self.promotion_buttons.values():
-                is_hovered, orig_img, hover_img, pos, _  = button
-                img = hover_img if is_hovered else orig_img
-                surface.blit(img, pos)
+        # Draw buttons
+        for button in self.promotion_buttons.values():
+            is_hovered, orig_img, hover_img, pos, _  = button
+            img = hover_img if is_hovered else orig_img
+            surface.blit(img, pos)
 
-            # Draw frame attachment
-            pos = (self.rect.x - 2, self.rect.y)
-            surface.blit(self.attachments[1], pos)
+        # Draw frame attachment
+        pos = (self.rect.x - 2, self.rect.y)
+        surface.blit(self.attachments[1], pos)
 
     def move(self, row, col):
         # Position
