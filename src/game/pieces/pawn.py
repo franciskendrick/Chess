@@ -136,6 +136,7 @@ class Pawn(Piece):
             
             mouse_pos = pygame.mouse.get_pos()
             if hitbox.collidepoint(mouse_pos):
+                self.on_promotion = False
                 return name
 
     def button_over_detection(self):
