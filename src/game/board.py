@@ -52,6 +52,13 @@ class Board:
             self.board[6][i] = pawn
             self.user_pawns.append(pawn)
 
+            # Get Kings
+            if piece == "K":
+                self.kings = {
+                    color[0]: self.board[0][i],  # top (AI)
+                    color[1]: self.board[7][i]  # bottom (user)
+                }
+
     # Draw
     def draw(self, display):
         self.board_surface.fill((0, 0, 0, 0))
@@ -109,9 +116,8 @@ class Board:
                             (0, x, y) in self.currently_selected.valid_moves(self.board, self.last_move) or 
                             (1, x, y) in self.currently_selected.valid_moves(self.board, self.last_move) or
                             (2, x, y) in self.currently_selected.valid_moves(self.board, self.last_move)):
-                        if self.move_number == 0 and self.currently_selected.color == "w" or (  # first move or selected piece is not equal to last move's color
-                                self.currently_selected.color != self.last_move["color"]):
-
+                        # first move or selected piece is not equal to last move's color
+                        if (self.move_number == 0 and self.currently_selected.color == "w") or (self.last_move != None and self.currently_selected.color != self.last_move["color"]):
                             valid_moves = self.currently_selected.valid_moves(self.board, self.last_move)
 
                             # Get currently selected position
@@ -157,6 +163,11 @@ class Board:
                                     self.currently_selected.init_promotion()
                                     self.previously_selected.button_over_detection()
 
+                            # Check if King is check
+                            opponents_color = "b" if self.currently_selected.color == "w" else "w" 
+                            if self.king_checked(opponents_color):
+                                pass
+
                             # Delete memory of currently selected
                             self.currently_selected = None
 
@@ -188,3 +199,14 @@ class Board:
         if isinstance(prev, Pawn) and prev.on_promotion:
             prev.button_over_detection()
             prev.has_paused = True
+
+    # Functions
+    def king_checked(self, opponents_color):
+        king = self.kings[opponents_color]  
+        y, x = king.row, king.col
+        for row in self.board:
+            for square in row:
+                if square != 0: 
+                    valid_moves = square.valid_moves(self.board, self.last_move)
+                    if (1, x, y) in valid_moves:
+                        return True
