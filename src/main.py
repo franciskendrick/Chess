@@ -171,7 +171,6 @@ def game_loop(selected):
             # Board's down detection
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # left-clicked has been downed
                 game.board.down_detection()
-
                 game.board.promotion_down_detection()
 
             # Board's over detection

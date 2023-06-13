@@ -119,11 +119,11 @@ class Pawn(Piece):
                 # En Passant
                 if last_move != None and last_move["piece"] == Pawn:
                     # En Passant at Left
-                    if last_move["current"] == (row, col - 1) and last_move["from"][0] == 7:
+                    if last_move["current"] == (row, col - 1) and last_move["from"][0] == 6:
                         valid_moves.append((2, col - 1, row + 1))
 
                     # En Passant at Right
-                    if last_move["current"] == (row, col + 1) and last_move["from"][0] == 7:
+                    if last_move["current"] == (row, col + 1) and last_move["from"][0] == 6:
                         valid_moves.append((2, col + 1, row + 1))
 
         # Return
